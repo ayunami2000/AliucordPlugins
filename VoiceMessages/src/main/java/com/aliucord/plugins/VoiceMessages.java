@@ -31,6 +31,7 @@ import com.aliucord.entities.Plugin;
 import com.aliucord.utils.DimenUtils;
 import com.aliucord.utils.ReflectUtils;
 import com.aliucord.wrappers.ChannelWrapper;
+import com.discord.api.message.MessageReference;
 import com.discord.models.guild.Guild;
 import com.discord.stores.StorePendingReplies;
 import com.discord.stores.StoreStageInstances;
@@ -129,12 +130,12 @@ public class VoiceMessages extends Plugin {
                     }
 
                     StorePendingReplies.PendingReply pendingReply = (StorePendingReplies.PendingReply) StorePendingReplies.access$getPendingReplies$p(StoreStream.Companion.getPendingReplies()).values().stream().findFirst().orElse(null);
-                    onRecordStop(true, StoreStream.getChannelsSelected().getId(), pendingReply == null ? 0L : pendingReply.getOriginalMessage().getChannelId(), pendingReply == null ? 0L : pendingReply.getOriginalMessage().getId(), pendingReply == null ? 0L : pendingReply.getOriginalMessage().getGuildId());
+                    onRecordStop(true, StoreStream.getChannelsSelected().getId(), pendingReply == null ? null : pendingReply.getMessageReference());
                     return true;
                 case (MotionEvent.ACTION_MOVE):
                     // check if user moved finger out of button
                     if ( motionEvent.getY() < 0 || motionEvent.getY() > view.getHeight()) {
-                        onRecordStop(false,0L, 0L, 0L, 0L);
+                        onRecordStop(false,0L, null);
                         Utils.showToast("Cancelled recording");
                     }
                     return true;
@@ -232,7 +233,7 @@ public class VoiceMessages extends Plugin {
 
     }
 
-    public void onRecordStop(boolean send, long discordid, long replychannelid, long replyid, long guildid) {
+    public void onRecordStop(boolean send, long discordid, MessageReference replyref) {
         try {
             mediaRecorder.stop();
 
@@ -249,7 +250,7 @@ public class VoiceMessages extends Plugin {
                     String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                     float seconds = (Integer.parseInt(durationStr) / 1000.0f);
 
-                    DiscordAPI.sendVoiceMessage(filename, seconds, waveform, discordid, replychannelid, replyid, guildid, extension);
+                    DiscordAPI.sendVoiceMessage(filename, seconds, waveform, discordid, replyref == null ? 0L : replyref.a(), replyref == null ? 0L : replyref.c(), replyref == null ? 0L : replyref.b(), extension);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         mmr.close();
