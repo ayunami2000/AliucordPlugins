@@ -58,14 +58,14 @@ public class VoiceMessages extends Plugin {
     private MediaRecorder mediaRecorder;
     private final Runnable updateWaveform = () -> {
 
-        while (true) {
+        while (!Thread.interrupted()) {
 
             waveFormView.addWave(Math.max(1, (int) ((mediaRecorder.getMaxAmplitude() / 32767.0) * 254))); //discord uses 8 bit , explode. Also I minimum val of 1 because if we insert 0 it breaks discorc
             waveFormView.invalidate();
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                break;
             }
         }
     };
