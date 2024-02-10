@@ -60,7 +60,7 @@ public class WaveFormView extends android.view.View {
         int width = getWidth();
         int height = getHeight();
 
-        for (int i = 1; i < waves.size(); i++) {
+        for (int i = 0; i < waves.size(); i++) {
             int lineLenght = waves.get(i) / 3 + 1;
             int top = height / 2;
             int left = width - 10 * i;
