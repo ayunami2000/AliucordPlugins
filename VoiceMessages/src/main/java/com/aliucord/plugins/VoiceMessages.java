@@ -250,12 +250,14 @@ public class VoiceMessages extends Plugin {
                     String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                     float seconds = (Integer.parseInt(durationStr) / 1000.0f);
 
+                    /*
                     if (replyref != null) {
                         Utils.showToast(replyref.a() + "");
                         Utils.showToast(replyref.b() + "");
                         Utils.showToast(replyref.c() + "");
                     }
-                    DiscordAPI.sendVoiceMessage(filename, seconds, waveform, discordid, replyref == null ? 0L : replyref.a(), replyref == null ? 0L : replyref.c(), replyref == null ? 0L : replyref.b(), extension);
+                    */
+                    DiscordAPI.sendVoiceMessage(filename, seconds, waveform, discordid, replyref == null ? 0L : replyref.b(), replyref == null ? 0L : replyref.c(), replyref == null ? 0L : replyref.a(), extension);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         mmr.close();
