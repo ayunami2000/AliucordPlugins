@@ -54,7 +54,6 @@ public class DiscordAPI {
             try (Http.Request request = Http.Request.newDiscordRNRequest("/channels/" + channelID + "/messages", "POST")) {
                 request.setHeader("content-type", "application/json");
 
-                // ,"message_reference":{"guild_id":"811255666990907402","channel_id":"811261478875299840","message_id":"1205924577964986510"}
                 if (replyID != 0) {
                     VoiceMessageReplyBody body = new VoiceMessageReplyBody(channelID, new VoiceMessageReplyBody.Attachment(
                             "voice-message" + extension,

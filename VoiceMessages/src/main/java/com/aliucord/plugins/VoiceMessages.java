@@ -128,7 +128,7 @@ public class VoiceMessages extends Plugin {
                             logger.error(e);
                         }
                     }
-                    StorePendingReplies.PendingReply pendingReply = (StorePendingReplies.PendingReply) StorePendingReplies.access$getPendingReplies$p(StoreMessages.access$getStream$p(StoreStream.getMessages()).getPendingReplies$app_productionGoogleRelease()).keySet().stream().findFirst().orElse(null);
+                    StorePendingReplies.PendingReply pendingReply = (StorePendingReplies.PendingReply) StorePendingReplies.access$getPendingReplies$p(StoreMessages.access$getStream$p(StoreStream.getMessages()).getPendingReplies$app_productionGoogleRelease()).values().stream().findFirst().orElse(null);
                     onRecordStop(true, StoreStream.getChannelsSelected().getId(), pendingReply == null ? 0 : pendingReply.getOriginalMessage().getChannelId(), pendingReply == null ? 0 : pendingReply.getOriginalMessage().getId(), pendingReply == null ? 0 : pendingReply.getOriginalMessage().getGuildId());
                     return true;
                 case (MotionEvent.ACTION_MOVE):
