@@ -32,7 +32,6 @@ import com.aliucord.utils.DimenUtils;
 import com.aliucord.utils.ReflectUtils;
 import com.aliucord.wrappers.ChannelWrapper;
 import com.discord.models.guild.Guild;
-import com.discord.stores.StoreMessages;
 import com.discord.stores.StorePendingReplies;
 import com.discord.stores.StoreStageInstances;
 import com.discord.stores.StoreStream;
@@ -128,8 +127,9 @@ public class VoiceMessages extends Plugin {
                             logger.error(e);
                         }
                     }
-                    StorePendingReplies.PendingReply pendingReply = (StorePendingReplies.PendingReply) StorePendingReplies.access$getPendingReplies$p(StoreMessages.access$getStream$p(StoreStream.getMessages()).getPendingReplies$app_productionGoogleRelease()).values().stream().findFirst().orElse(null);
-                    onRecordStop(true, StoreStream.getChannelsSelected().getId(), pendingReply == null ? 0 : pendingReply.getOriginalMessage().getChannelId(), pendingReply == null ? 0 : pendingReply.getOriginalMessage().getId(), pendingReply == null ? 0 : pendingReply.getOriginalMessage().getGuildId());
+
+                    StorePendingReplies.PendingReply pendingReply = (StorePendingReplies.PendingReply) StorePendingReplies.access$getPendingReplies$p(StoreStream.Companion.getPendingReplies()).values().stream().findFirst().orElse(null);
+                    onRecordStop(true, StoreStream.getChannelsSelected().getId(), pendingReply == null ? 0L : pendingReply.getOriginalMessage().getChannelId(), pendingReply == null ? 0L : pendingReply.getOriginalMessage().getId(), pendingReply == null ? 0L : pendingReply.getOriginalMessage().getGuildId());
                     return true;
                 case (MotionEvent.ACTION_MOVE):
                     // check if user moved finger out of button
